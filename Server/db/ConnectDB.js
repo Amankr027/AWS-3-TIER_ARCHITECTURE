@@ -3,25 +3,17 @@ const mysql = require("mysql2/promise");
 
 //the async await function which connects to the database using the credentials in the .env files
 const ConnectDB = async () => {
-  // const pool = await mysql.createPool({
-  //   host: process.env.DB_HOST,
-  //   user: process.env.DB_USER,
-  //   password: process.env.DB_PASSWORD,
-  //   database: process.env.DB_DATABASE,
-  //   waitForConnections: process.env.DB_WAITFORCONNECTIONS,
-  //   connectionLimit: process.env.DB_CONNECTIONLIMIT,
-  //   queueLimit: process.env.DB_QUEUELIMIT
-  // });
-
   const pool = await mysql.createPool({
-    host: process.env.DB_HOST || "localhost", // Use internal DNS of MySQL in ECS
-    user: process.env.DB_USER || "root",
-    password: process.env.DB_PASSWORD || "root",
-    database: process.env.DB_DATABASE || "crud_operations",
-    waitForConnections: process.env.DB_WAITFORCONNECTIONS || true,
-    connectionLimit: process.env.DB_CONNECTIONLIMIT || 10,
-    queueLimit: process.env.DB_QUEUELIMIT || 0
-});
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    waitForConnections: process.env.DB_WAITFORCONNECTIONS,
+    connectionLimit: process.env.DB_CONNECTIONLIMIT,
+    queueLimit: process.env.DB_QUEUELIMIT
+  });
+
+  
 
 
   // async await query which creates the database if it doesn't exist
