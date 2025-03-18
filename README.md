@@ -9,32 +9,6 @@ https://github.com/mushfiqurniazzz/Mysql-CRUD-Operations-With-Nodejs-And-Reactjs
 <h3>Running the Project Locally</h3>
   <p>To run this project on your local machine, follow these steps:
 
-1. <b>Clone the Repository</b>: Clone this repository to your local machine:
-
-   git clone <repository_url>
-
-2. <b>Navigate to Project Directory</b>: Move into the project directory:
-
-   cd <project_directory>
-
-3. <b>Install Dependencies</b>: Install the necessary dependencies using npm or yarn:
-
-   npm install
-
-   or
-
-   yarn
-
-4. <b>Setup Environment Variables</b>: Create a `.env` file in the root of your project directory and add the variables given in `.env.sample`
-
-5. <b>Start the Development Server</b>: Run the following command to start the development server:
-
-   npm start
-
-6. <b>Access the App</b>: Open your web browser and navigate to `http://localhost:3000` for frontend `http://localhost:5000` to access the app. You can now use the app locally on your machine, connected to your MySQL database using the variables specified in the `.env` file.
-
-7. <b>Note</b>: The project may not work if you do not install dependencies in both front end and backend. So you would have to apply step 2 and 3 twice, once in frontend and once in backend.
-</p>
 # AWS-3-TIER_ARCHITECTURE
 
 # 🚀 AWS 3-Tier Architecture Deployment
@@ -58,10 +32,7 @@ This project sets up a **secure, scalable AWS 3-tier architecture** using **Dock
   - `Subnet 7`: **MySQL Database (Hosted on EC2 Instance)**
   - `Subnet 8`: **Jenkins (CI/CD) & Grafana (Monitoring)**
 
-## ⚙️ **Deployment & CI/CD Flow**
-
-
-## ⚙️ **Deployment & CI/CD Flow**
+## ⚙️ **Deployment & CI/CD Flow*
 
 ### 🔹 **Jenkins Setup**
 - **Jenkins is deployed on a private subnet** and is only accessible via **VPN**.
@@ -84,7 +55,7 @@ This project sets up a **secure, scalable AWS 3-tier architecture** using **Dock
 3️⃣ Builds Docker Image → Pushes to AWS Elastic Container Registry (ECR)
 4️⃣ Updates Task Definition → Deploys new version in ECS
 ```
-#### **Jenkinsfile** (Example Pipeline)
+#### **Jenkinsfile** (Sample Pipeline)
 ```groovy
 pipeline {
     agent any
