@@ -1,0 +1,92 @@
+pipeline {
+    agent any
+
+    environment {
+        AWS_REGION = 'us-west-2'
+        ECR_REGISTRY = '423623871737.dkr.ecr.us-west-2.amazonaws.com'
+        ECR_REPO = 'jenkins-frontend'
+        IMAGE_TAG = "${BUILD_NUMBER}"  // Use build number for unique tagging
+        TASK_FAMILY = 'aman-frontend'  // ECS Task Definition family name
+        ECS_CLUSTER = 'ttn-project'   // ECS Cluster Name
+        ECS_SERVICE = 'frontend'       // ECS Service Name
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', credentialsId: 'github-ssh', url: 'git@github.com:Amankr027/TTN-PROJECT-Frontend.git'
+            }
+        }
+
+        stage('Login to AWS ECR') {
+            steps {
+                script {
+                    sh 'aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY'
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'docker build -t $ECR_REGISTRY/$ECR_REPO:$IMAGE_TAG .'
+                }
+            }
+        }
+
+        stage('Push Image to ECR') {
+            steps {
+                script {
+                    sh 'docker push $ECR_REGISTRY/$ECR_REPO:$IMAGE_TAG'
+                }
+            }
+        }
+
+        stage('Update ECS Task Definition') {
+            steps {
+                script {
+                    sh '''
+                    # Get latest task definition JSON
+                    aws ecs describe-task-definition --task-definition $TASK_FAMILY --query taskDefinition > task-def.json
+
+                    # Remove unwanted fields
+                    jq 'del(.taskDefinitionArn, .revision, .status, .requiresAttributes, .registeredAt, .registeredBy, .compatibilities)' task-def.json > new-task-def.json
+                    
+                    # Update the image field with the new version
+                    jq --arg IMAGE "$ECR_REGISTRY/$ECR_REPO:$IMAGE_TAG" '.containerDefinitions[0].image = $IMAGE' new-task-def.json > updated-task-def.json
+
+                    # Register new task definition revision
+                    NEW_TASK_REVISION=$(aws ecs register-task-definition --cli-input-json file://updated-task-def.json --query 'taskDefinition.revision' --output text)
+                    
+                    echo "New Task Revision Created: $NEW_TASK_REVISION"
+                    echo "NEW_TASK_REVISION=$NEW_TASK_REVISION" > $WORKSPACE/env_vars
+                    '''
+                }
+            }
+        }
+
+        stage('Force Deploy ECS Service') {
+            steps {
+                script {
+                    sh '''
+                    . $WORKSPACE/env_vars  # FIX: Use "." instead of "source"
+
+                    # Update ECS service to use the latest task definition revision
+                    aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --task-definition $TASK_FAMILY:$NEW_TASK_REVISION --force-new-deployment
+
+                    echo "✅ ECS Service '$ECS_SERVICE' updated successfully with Task Definition Revision: $NEW_TASK_REVISION"
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Deployment Successful! ECS Service Updated."
+        }
+        failure {
+            echo "❌ Deployment Failed! Check logs for errors."
+        }
+    }
+}
