@@ -1,14 +1,3 @@
-
-<h1>MySQL CRUD - Nodejs, Reactjs</h1>
-
-
-https://github.com/mushfiqurniazzz/Mysql-CRUD-Operations-With-Nodejs-And-Reactjs/assets/148959859/c0adf4d1-336c-4ee1-b28b-c5528eb481d0
-
-
-<p>This app allows users to save users with name and email with specific id for everyone, featuring functionalities like create, read, update, delete. It uses MySQL as the database to store users, Express.js for handling server-side logic, React.js for building the user interface, and Node.js for server-side runtime environment. The app provides a seamless experience for users to save users and time.</p>
-<h3>Running the Project Locally</h3>
-  <p>To run this project on your local machine, follow these steps:
-
 # AWS-3-TIER_ARCHITECTURE
 
 # 🚀 AWS 3-Tier Architecture Deployment
@@ -89,15 +78,41 @@ pipeline {
 
 ## 📊 **Monitoring & Logging**
 
-### 🔹 **Grafana (Fetches Metrics from CloudWatch)**
-- 📌 **Monitors ECS Task Performance:** CPU, Memory, Network Traffic
-- 📌 **CloudWatch Integration for Logs & Alerts**
-
-```plaintext
-1️⃣ CloudWatch collects logs from ECS, ALB, and EC2
-2️⃣ Grafana pulls CloudWatch metrics
-3️⃣ Provides real-time dashboards & alerts
+### 🔹 **Grafana Setup & Monitoring**
+#### **Steps to Install Grafana**
+1️⃣ **Update the local system packages:**
+```bash
+sudo apt update && sudo apt upgrade -y
 ```
+
+2️⃣ **Add the Grafana repository and import the GPG key:**
+```bash
+sudo apt install -y software-properties-common
+sudo add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"
+sudo wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+```
+
+3️⃣ **Install Grafana using the package manager:**
+```bash
+sudo apt update && sudo apt install -y grafana
+```
+
+4️⃣ **Start and enable the Grafana service:**
+```bash
+sudo systemctl start grafana-server
+sudo systemctl enable grafana-server
+```
+
+5️⃣ **Access Grafana via the browser on port 3000:**
+```plaintext
+http://<your-server-ip>:3000
+```
+
+6️⃣ **Login with default credentials:**
+   - Username: `admin`
+   - Password: `admin` (change it after first login)
+
+7️⃣ **Integrate with CloudWatch to fetch ECS metrics.**
 
 ## 🔐 **Security Measures**
 - **IAM Roles & Policies:** Restricted access to ECS, ECR, and S3.
@@ -130,19 +145,13 @@ docker push <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/my-app:latest
 aws ecs update-service --cluster my-cluster --service my-service --force-new-deployment
 ```
 
-## 📎 **Application Features**
-- **Create, Read, Update, Delete (CRUD) users**
-- **REST API with JWT Authentication**
-- **Load Balanced for High Availability**
 
-## 📞 **Support**
-For issues, contact: `admin@example.com`.
+<h1>MySQL CRUD - Nodejs, Reactjs</h1>
 
----
 
-### ✅ **Next Steps**
-- 🔄 Implement Auto-Scaling for ECS Services
-- 📦 Use AWS S3 for Static File Storage
-- 🔍 Add AWS X-Ray for Request Tracing
+https://github.com/mushfiqurniazzz/Mysql-CRUD-Operations-With-Nodejs-And-Reactjs/assets/148959859/c0adf4d1-336c-4ee1-b28b-c5528eb481d0
+
+
+<p>This app allows users to save users with name and email with specific id for everyone, featuring functionalities like create, read, update, delete. It uses MySQL as the database to store users, Express.js for handling server-side logic, React.js for building the user interface, and Node.js for server-side runtime environment. The app provides a seamless experience for users to save users and time.</p>
 
 🚀 **Happy Deploying!** 🎯
