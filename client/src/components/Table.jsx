@@ -7,7 +7,7 @@ import CreateUserModal from "./modals/CreateUserModal";
 import DeleteUserModal from "./modals/DeleteUserModal";
 
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://mayank-backend-257856059.us-west-2.elb.amazonaws.com";
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 //creation of the parent functional component which will be pased to app.jsx
 function Table() {
   //using use state, use ref for state variables and ref to track if fetch has already been attempted
