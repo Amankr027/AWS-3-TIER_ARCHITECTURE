@@ -6,7 +6,7 @@ import axios from "axios";
 
 // const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
 // const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://mayank-backend-257856059.us-west-2.elb.amazonaws.com";
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 // const API_BASE_URL = import.meta.env.VITE_API_URL || "http://internal-mayank-backend-2099175306.us-west-2.elb.amazonaws.com";
 //starting of the functional component which edits the user in the database
