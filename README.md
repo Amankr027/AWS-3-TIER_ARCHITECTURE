@@ -119,31 +119,6 @@ http://<your-server-ip>:3000
 - **Security Groups:** Allows only ALB-to-backend and backend-to-DB traffic.
 - **Secrets Management:** AWS Secrets Manager for DB credentials.
 
-## 🛠️ **How to Deploy**
-
-### ✅ **Step 1: Clone the Repository**
-```bash
-git clone https://github.com/user/repo.git
-cd repo
-```
-
-### ✅ **Step 2: Deploy Infrastructure using Terraform** *(Optional)*
-```bash
-terraform init
-terraform apply -auto-approve
-```
-
-### ✅ **Step 3: Push Images to AWS ECR**
-```bash
-docker build -t my-app .
-docker tag my-app:latest <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/my-app:latest
-docker push <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/my-app:latest
-```
-
-### ✅ **Step 4: Deploy to AWS ECS**
-```bash
-aws ecs update-service --cluster my-cluster --service my-service --force-new-deployment
-```
 
 
 <h1>MySQL CRUD - Nodejs, Reactjs</h1>
