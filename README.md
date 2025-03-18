@@ -60,14 +60,30 @@ This project sets up a **secure, scalable AWS 3-tier architecture** using **Dock
 
 ## ⚙️ **Deployment & CI/CD Flow**
 
+
+## ⚙️ **Deployment & CI/CD Flow**
+
+### 🔹 **Jenkins Setup**
+- **Jenkins is deployed on a private subnet** and is only accessible via **VPN**.
+- The pipeline is configured using **Pipeline Script from SCM**.
+- SSH-based authentication is used:
+  - **Public Key** is stored in **GitHub**.
+  - **Private Key** is stored in **Jenkins** for authentication.
+
+### 🔹 **Steps to Set Up CI/CD Pipeline**
+1️⃣ **Create a new pipeline in Jenkins**
+2️⃣ Select **Pipeline Script from SCM**
+3️⃣ Choose **Git** as SCM and enter the repository URL
+4️⃣ Select **SSH Credentials** (Stored private key in Jenkins)
+5️⃣ Save and trigger the build
+
 ### 🔹 **Jenkins Pipeline (CI/CD Workflow)**
 ```plaintext
 1️⃣ Developer pushes code → Private GitHub Repo
-2️⃣ Jenkins detects changes → Pulls the latest code
+2️⃣ Jenkins via BUILD NOW → Pulls the latest code
 3️⃣ Builds Docker Image → Pushes to AWS Elastic Container Registry (ECR)
 4️⃣ Updates Task Definition → Deploys new version in ECS
 ```
-
 #### **Jenkinsfile** (Example Pipeline)
 ```groovy
 pipeline {
