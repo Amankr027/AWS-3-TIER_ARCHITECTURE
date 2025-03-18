@@ -7,7 +7,7 @@ This project sets up a **secure, scalable AWS 3-tier architecture** using **Dock
 
 ## 🔥 Architecture Diagram
 
-![AWS 3-Tier Architecture](./architecture.png)
+![AWS 3-Tier Architecture](./Architecture.png)
 
 ## 🏗️ AWS Resources Setup
 
